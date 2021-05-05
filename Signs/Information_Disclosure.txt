@@ -1,0 +1,25 @@
+
+REPORT: https://hackerone.com/reports/1134060
+
+TITLE: credentials found in config file on github
+
+PROGRAM: BlockFi
+
+APP FUNCTION: Cryptocurrency Lending??
+
+ENDPOINT: Github Repo
+
+CRUD / EXPLOITED FUNCTION: Sensitive Data Pushed to Github
+
+SUMMARY: The researcher found credentials in 2 separate github repos.  These belonged to different users.
+
+TECHNICAL SKILL REQUIRED: Novice
+
+TAKEAWAYS: 
+1. YML files can hold sensitive data
+2. 
+3. 
+
+VULN DISCO AUTOMATION: github_brute-dork.py
+
+-----------------------------------------------------------------------

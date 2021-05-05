@@ -1,0 +1,57 @@
+REPORT: https://hackerone.com/reports/997926
+
+TITLE: SSRF - Unchecked Snippet IDs for distributed files
+
+PROGRAM: Open-Xchange
+
+TARGET APP: https://github.com/open-xchange/appsuite-middleware
+
+APP FUNCTION: Messaging, collaboration, and office productivity software
+    Dovecot - A IMAP, POP3 and Submission server for email.
+    App Suite - Web-based access email, calendaring, cloud storage and office document editing.
+    PowerDNS - A DNS server that enables domain resolution and network security features.
+
+ENDPOINT: /ajax/snippet?action=new
+
+CRUD / EXPLOITED FUNCTION: Create / Mail Service
+
+SUMMARY: By using static code analysis, the researcher was able to force the app to poison a url that is later used by the server to make an internal request.  
+This requred changing a boolean value from false to true, enabling additional functionality.  
+Any user could perform this action on their own system, which allows that user to send the malformed url which would later be used to perform an SSRF attack.
+
+TECHNICAL SKILL REQUIRED: Expert
+
+TAKEAWAYS: 
+1. Restrictions can be lifted by modifying code if the app has a local component (Android / Desktop App)
+2. 
+3. 
+
+VULN DISCO AUTOMATION: None.  This exploit requires exploiting a specific Java class for this app that likely won't be used in other apps.
+
+-----------------------------------------------------------------------
+
+REPORT: 
+
+TITLE: 
+
+PROGRAM: 
+
+APP FUNCTION:
+
+ENDPOINT:
+
+CRUD / EXPLOITED FUNCTION: 
+
+SUMMARY:
+
+TECHNICAL SKILL REQUIRED:
+
+TAKEAWAYS:
+1.
+2.
+3.
+
+VULN DISCO AUTOMATION:
+
+-----------------------------------------------------------------------
+

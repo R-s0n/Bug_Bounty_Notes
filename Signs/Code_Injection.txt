@@ -1,0 +1,29 @@
+
+REPORT: https://hackerone.com/reports/1051192
+
+TITLE: Code Injection via Insecure Yaml.load
+
+PROGRAM: Kubernetes
+
+APP FUNCTION: A collection of tools for testing automation in Kubernetes, a container orchestration system
+
+ENDPOINT: https://github.com/kubernetes/test-infra
+
+CRUD / EXPLOITED FUNCTION: Create and Update / Test Scripts
+
+SUMMARY: When parsing the test-infra repository, the researcher identified yaml.load() is used to update a configuration file, leading to code injection.  
+This will only work (for the most part) if the tool is using PyYAML < 5.1
+
+TECHNICAL SKILL REQUIRED: Moderate
+
+TAKEAWAYS:
+1. Code injection means the attacker can add their own code the application will later run.  Command injection is when the attacker gets the target server to execute comands remotely.
+2. Check PyYAML for vulnerable version
+3. 
+
+VULN DISCO AUTOMATION:
+1. Parse Github for YAML.load()
+2. Scan for Python apps (Django/Flask)
+3. Search Github for PyYAML in files with "requirements" in the name, then check manually
+
+-----------------------------------------------------------------------

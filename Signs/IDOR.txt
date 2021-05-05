@@ -1,0 +1,23 @@
+
+REPORT: 
+
+TITLE:
+
+PROGRAM:
+
+APP FUNCTION:
+
+ENDPOINT:
+
+SUMMARY:
+
+TECHNICAL SKILL REQUIRED:
+
+TAKEAWAYS:
+1.
+2.
+3.
+
+VULN DISCO AUTOMATION:
+
+-----------------------------------------------------------------------

@@ -1,0 +1,57 @@
+
+REPORT: https://hackerone.com/reports/995273
+
+TITLE: XSS - Notes - Attribute injection through overlapping tags
+
+PROGRAM: Open-Xchange
+
+APP FUNCTION: Application for taking personal notes.  Part of a larger app for workplace collaboration.
+
+ENDPOINT: https://github.com/open-xchange/appsuite-middleware (Notes)
+
+CRUD / EXPLOITED FUNCTION: Create / Image or File Upload (text converted to plain text file)
+
+SUMMARY: The researcher noticed that the notes app performs several rounds of sanitizing/modifying input using the .replace method (Javascript).  
+By adding a full URL in an <img src> tag, this will trigger a second .replace method that adds an <a href> tag into the <img src> tag.
+Adding quotation marks will break the markup tag, adding an additional attribute (onerror for xss).  
+This would normally break the image, but with a clever payload the researcher was able to fix the break, resulting in javascript being executed.
+
+TECHNICAL SKILL REQUIRED: Expert
+
+TAKEAWAYS:
+1. Look for the .escape and .replace methods in javascript source code
+2. Look for markup language in source code
+3. Underscore is a common js library to escape special characters (& to &amp;)
+4. Look for outdated versions of underscore.js (>=1.13.0-0 <1.13.0-2,>=1.3.2 <1.12.1)
+
+VULN DISCO AUTOMATION: 
+1. Wappalyzer to identify underscore.js version number
+
+-----------------------------------------------------------------------
+
+REPORT: https://hackerone.com/reports/993222
+
+TITLE: XSS - Search - Unescaped contact job
+
+PROGRAM: Open-xchange
+
+APP FUNCTION: Acts as an address book.  Can add contacts, etc.
+
+ENDPOINT: https://github.com/open-xchange/appsuite-middleware
+
+CRUD / EXPLOITED FUNCTION: Create / Create Object
+
+SUMMARY: Researcher noticed input text isn't sanitized when adding the Company or Position.  
+This causes any user who searches for the attacker to have Javascript code execute on their device.
+
+TECHNICAL SKILL REQUIRED: Novice
+
+TAKEAWAYS:
+1. Basic functions like sanitizing code can be overlooked by developers.
+2. XSS payloads are not always executed on the page loaded after input.
+3. Always use xxshunter for payloads (or set up a server to intercept requests)
+
+VULN DISCO AUTOMATION:
+1. 
+
+-----------------------------------------------------------------------

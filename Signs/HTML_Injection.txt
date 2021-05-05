@@ -1,0 +1,27 @@
+REPORT: https://hackerone.com/reports/381553
+
+TITLE: HTML Injection with XSS possible
+
+PROGRAM: Imgur
+
+APP FUNCTION: Upload and view pictures
+
+ENDPOINT: https://[USERNAME].imgur.com
+
+CRUD / EXPLOITED FUNCTION: Create and Update / Create Object (Album)
+
+SUMMARY: The researcher was able to inject HTML and eventually XSS payloads by setting the payload as the name of an album that was created.
+The payload uploaded was #"></div><a href=javaSCRIPT&colon;alert(/XSS/)>XSS</a> which was done by bypassing the WAF.
+
+
+TECHNICAL SKILL REQUIRED: Novice
+
+TAKEAWAYS: 
+1. Always check for HTML injection first, then move to XSS
+2. &colon; can be used to replace :
+3. 
+
+VULN DISCO AUTOMATION: 
+1. HTML injection fuzzing
+
+-----------------------------------------------------------------------

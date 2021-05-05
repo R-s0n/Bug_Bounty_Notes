@@ -1,0 +1,25 @@
+
+REPORT: https://hackerone.com/reports/867513
+
+TITLE: Takeover an account that doesn't have a Shopify ID and more
+
+PROGRAM: Shopify
+
+APP FUNCTION: E-commerce Platform
+
+ENDPOINT: https://pos-channel.shopifycloud.com/graphql-proxy/admin
+
+CRUD / EXPLOITED FUNCTION: Update / User Account
+
+SUMMARY: The researcher was able to take over a victim's account by exploiting a mechanism in the app to combine 
+
+TECHNICAL SKILL REQUIRED: 
+
+TAKEAWAYS: 
+1. 
+2. 
+3. 
+
+VULN DISCO AUTOMATION: 
+
+-----------------------------------------------------------------------

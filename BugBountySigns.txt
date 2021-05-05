@@ -1,0 +1,41 @@
+*************
+* QUESTIONS *
+*************
+# Ask yourself these questions for the application
+
+1.
+
+# Ask yourself these questions for EVERY page
+
+1. What part of CRUD?
+
+
+
+************
+* TEMPLATE *
+************
+
+REPORT: 
+
+TITLE: 
+
+PROGRAM: 
+
+APP FUNCTION: 
+
+ENDPOINT: 
+
+CRUD / EXPLOITED FUNCTION: 
+
+SUMMARY: 
+
+TECHNICAL SKILL REQUIRED: 
+
+TAKEAWAYS: 
+1. 
+2. 
+3. 
+
+VULN DISCO AUTOMATION: 
+
+-----------------------------------------------------------------------

@@ -1,0 +1,94 @@
+***********************
+* To Do - Normal Life *
+***********************
+
+Check mail for license
+
+Clean Jeep - Tuesday the 11th
+
+GO FISHING! - Thursday
+
+************************
+* To Do - Bug Bounties *
+************************
+
+# Wednesday
+
+1. Clean Kitchen
+2. Build machine in AWS for Scan Template Testing
+3. HackerOne Reports all day!
+4. Run
+5. Arm Workout
+
+## High-level idea for Blind XSS/HTMLi testing: 
+
+Step 1 - Ffuf to find endopints of URL
+Step 2 - Arjun to find parameters for each endpoint
+// At this point we have a JSON object for each endpoint with a list of parameters
+Step 3 - Cycle through and make requests for each endpoint with each parameter (maybe eventually this can test HPP) using webhook/xsshunter/burp-collaborator payload
+// Also use requests to send the payloads as headers, cookies, etc.
+Step 4 - Profit!
+
+1. Parameter Discovery - Arjun (Engulf.py) - Done!
+
+2. Automate Platform Identification (Part of Engulf.py?)
+CLI
+-wappalyzer
+-webanalyze
+-whatweb
+
+# Ignite.py
+
+1. Fix "/" issue - Done!
+
+2. Fix duplicate issue - Done!
+
+3. ffuf: unauthenticated and authenticated
+
+4. If ffuf fails (exit code 2), change VPN IP and continue for loop
+
+5. Ffuf using different request methods? - Done!
+
+
+## Vuln Discovery Automation ##
+
+1. Add workflow feature to nuclei wrapper
+
+Nuclei - Done (Continue To Improve)
+Brutespray - Add firewood.py to cron jobs on Recon Box
+Burp Bounty - Done (Needs 
+xsshunter
+Sn1per
+Nikto (on Target Url as part of enum automation)
+meg
+
+
+**************************
+* To Do - Away From Home *
+**************************
+
+Stand-alone ClearSky tool
+
+Python script to generate Crontab
+
+
+*************
+* Long Term *
+*************
+
+Add Favfreak to Fire_Starter.py
+
+Github_brute-dork automation script pulls users from WAPT framework and automatically uploads results
+
+Fix Subdomainizer module (Clear out IPv6 Addresses in subdomains)
+
+Attacks auto-populate based on enumeration information
+
+Cheat sheets for deployments (and Django) before I lose access to the learning platform
+
+
+***********************
+* Automation Schedule *
+***********************
+
+

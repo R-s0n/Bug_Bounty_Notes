@@ -1,0 +1,59 @@
+
+REPORT: https://hackerone.com/reports/983548
+
+TITLE: MobileIron Unauthenticated RCE on mdm.qiwi.com with WAF bypass
+
+PROGRAM: QIWI
+
+APP FUNCTION: Application for financial, PoS, and goods delivery
+
+ENDPOINT: *.qiwi.com/mifs/.;/services/LogService
+
+CRUD / EXPLOITED FUNCTION: 
+
+SUMMARY: This vulnerability exists in the MobileIron MDM software, which is used to manage BYOD.  
+Three related CVEs were exploited using a publicly available exploit.  
+The researcher created a simple check using a curl command piped into a grep to check for a vulnerable endpoint.
+
+TECHNICAL SKILL REQUIRED: Novice
+
+TAKEAWAYS:
+1. Study new CVEs as they come out, then build a check for these and begin checking all subdomains.
+2. The WAF blocked a known java class (java.lang.test).  This told the researcher there is a WAF and at least part of the app is written in Java.
+3. Even if the CVE/exploit are in another company's product, as long as it lives on the target company's server it is in scope. (Check if the product is SaaS)
+4. Scan for port 9997
+
+VULN DISCO AUTOMATION:
+1. Nuclei check
+
+-----------------------------------------------------------------------
+
+REPORT: https://hackerone.com/reports/1125425
+
+TITLE: RCE via unsafe inline Kramdown options when rendering certain Wiki pages
+
+PROGRAM: Gitlab
+
+APP FUNCTION: DevOps CI/CD platform
+
+ENDPOINT: Personal Gitlab instance
+
+CRUD / EXPLOITED FUNCTION: Create / Image or File Upload
+
+SUMMARY: Resercher identified that when a wiki page is uploaded to Gitlab, there is a conditional that checks the filetype by it's name.  If the file is unusual, the other_markup_unsafe function is called to sanitize text in that file.  
+Kramdown and Rouge are used to sanitize the text.  By setting the formatter option, the researcher was able to instantiate a Redis object and set the driver value to a directory traversal payload.
+The driver value is then run through eval(), so any existing file set as the driver value will be evaluated.  Finally, the researcher was able to call an additional file that was attacked to the intial one
+with a predictable file location.  By setting the driver location to the attached file location, the code written in the attached file is executed.
+
+TECHNICAL SKILL REQUIRED: Expert
+
+TAKEAWAYS:
+1. Redis objects have a driver string variable that can be used for LFI
+2. When targeting a Ruby app, try to find the Kramdown version
+3. Rogue formatter (syntax_highlighter_opt="{formatter: [OBJECT]}) can be used to instantiate objects
+
+VULN DISCO AUTOMATION:
+1. Scan for Ruby on Rails
+2. Scan Github repos for Rouge and driver
+
+-----------------------------------------------------------------------
