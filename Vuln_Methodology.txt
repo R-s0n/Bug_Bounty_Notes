@@ -1,0 +1,41 @@
+# HTTP Request Smuggling
+
+Step 1: Right-click on FQDN -> Smuggle Probe
+Step 2: If found, left-click on the "Issue" -> left-click on the "Request 1" tab -> select CL.TE or TE.CL
+    (If the vuln is found on multiple directories, expand and click on the correct path)
+Step 3: Edit prefix to meet payload requirements
+Step 4: Attack
+
+
+
+# De-serialization
+
+## Black-Box
+Step 1: Identify language application is written in -> Understand how data is serialized in that language
+    - PHP -- O:4:"User":2:{s:4:"name":s:6:"carlos"; s:10:"isLoggedIn":b:1;}
+    - Java -- Object begins with "ac ed" (Hex) or "rO0" (Base64)
+Step 2: Find serialized data that can be controlled by user input
+Step 3: Choose the best method of attack
+    1. Edit object directly in it's byte stream form
+    2. Write a script in the noted language to create and serialize an object yourself
+
+
+## White-box
+Step 1: Parse source code for keywords:
+    - PHP -- serialize() | unserialize()
+    - Java -- java.io.Serializable | readObject() | InputStream
+
+
+
+# Prototype Poisoning
+
+Step 1: Identify vulnerability with payload/scanner
+Step 2: Find vulnerable gadgets
+    - Fingerprint.js -- https://gist.github.com/nikitastupin/b3b64a9f8c0eb74ce37626860193eaec
+    - Wappalyzer
+    - BuiltWith
+Step 3: If no vulnerable gadgets found -> check Untrusted-Types plugin in Dev Tools Console
+
+
+
+# De-serialization

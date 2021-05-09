@@ -57,3 +57,30 @@ VULN DISCO AUTOMATION:
 2. Scan Github repos for Rouge and driver
 
 -----------------------------------------------------------------------
+
+REPORT: https://hackerone.com/reports/1067547
+
+TITLE: Unauthenticated access to webmail at maildev.happytools.dev leading to compromised wordpress site api.happytools.dev [RCE]
+
+PROGRAM: Automattic (WordPress CMS)
+
+APP FUNCTION: WordPress is a Content Management System (CMS) that can be used to build/maintain websites.
+
+ENDPOINT: /wp-login?action=lostpassword && https://maildev.happytools.dev/
+
+CRUD / EXPLOITED FUNCTION: Update / Reset Password
+
+SUMMARY: Researcher was able to reset password from an exposed WP login panel.
+Researcher was also able to access the mail server where the reset email was sent.
+Using these two exposed endpoints together, the researcher could reset the password of an admin account and begin uploading malicious plugins for RCE
+
+TECHNICAL SKILL REQUIRED: Novice
+
+TAKEAWAYS: 
+1. When SSL Cert is expired, set date-time back to before it was expired and see if there is any different functionality (tls-scan?)
+2. Nuclei scan exists in exposed-panels to scan for WP login
+3. api may be a default user for WP
+
+VULN DISCO AUTOMATION: Nuclei scans
+
+-----------------------------------------------------------------------

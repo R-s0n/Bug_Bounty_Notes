@@ -12,13 +12,19 @@ GO FISHING! - Thursday
 * To Do - Bug Bounties *
 ************************
 
-# Wednesday
+Saturday:
+1. Build Prototype Pollution automation script - Done!
+2. Run 5 miles - Done!
+3. Set up CRON job for new script
+4. PortSwigger Labs
 
-1. Clean Kitchen
-2. Build machine in AWS for Scan Template Testing
-3. HackerOne Reports all day!
-4. Run
-5. Arm Workout
+Sunday:
+1. Pack / Load Jeep
+2. PortSwigger Labs
+3. Arm workout
+
+
+
 
 ## High-level idea for Blind XSS/HTMLi testing: 
 

@@ -3,13 +3,26 @@
 *************
 # Ask yourself these questions for the application
 
-1.
+1. What languages are used?
+2. How does it handle errors?
 
 # Ask yourself these questions for EVERY page
 
 1. What part of CRUD?
 
+************************
+* VULN TESTING DETAILS *
+************************
 
+Account Takeover - Burp (manual)
+Code Injection - Burp (scans/manual)
+HTML Injection - Custom Script (TBD) / Burp (scans/manual)
+IDOR - Burp (manual)
+Information Disclosure - Custom Script (Github_brute-dork) / Manual Search
+Prototype Pollution - Custom Script (Drifting_Embers) / Developer Tools (manual)
+RCE - Nuclei (known CVE) / Burp (manual)
+SSRF - Burp (manual)
+XSS - Custom Script (TBD) / Burp (scans/manual)
 
 ************
 * TEMPLATE *

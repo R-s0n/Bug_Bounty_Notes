@@ -1,5 +1,0 @@
-Step 1: Right-click on FQDN -> Smuggle Probe
-Step 2: If found, left-click on the "Issue" -> left-click on the "Request 1" tab -> select CL.TE or TE.CL
-    (If the vuln is found on multiple directories, expand and click on the correct path)
-Step 3: Edit prefix to meet payload requirements
-Step 4: Attack

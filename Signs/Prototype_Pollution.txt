@@ -1,0 +1,25 @@
+
+REPORT: https://hackerone.com/reports/968355
+
+TITLE: [i18next] Prototype pollution attack
+
+PROGRAM: Node.js third-party modules
+
+APP FUNCTION: Server-side Javascript
+
+ENDPOINT: i18next module
+
+CRUD / EXPLOITED FUNCTION: addResourceBundle function
+
+SUMMARY: Researcher used static code analysis to recognize a well-known node.js module only sanitizes __proto__ requests, but not the constructor.
+
+TECHNICAL SKILL REQUIRED: Moderate
+
+TAKEAWAYS: 
+1. PPA attacks can target both __proto__ and constructor
+2. Parse js files for __proto__ for sanitization rules (if (prop !== '__proto__'))
+3. Check for outdated JS libraries
+
+VULN DISCO AUTOMATION: 
+
+-----------------------------------------------------------------------
