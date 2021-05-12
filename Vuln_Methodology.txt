@@ -14,10 +14,19 @@ Step 4: Attack
 Step 1: Identify language application is written in -> Understand how data is serialized in that language
     - PHP -- O:4:"User":2:{s:4:"name":s:6:"carlos"; s:10:"isLoggedIn":b:1;}
     - Java -- Object begins with "ac ed" (Hex) or "rO0" (Base64)
+    - Ruby -- 
 Step 2: Find serialized data that can be controlled by user input
 Step 3: Choose the best method of attack
     1. Edit object directly in it's byte stream form
     2. Write a script in the noted language to create and serialize an object yourself
+    3. Use an existing tool:
+        - PHP -- PHPGCC
+            ~ Function calls: exec | system
+            ~ ./phpgcc [PAYLAOD] [PARAMETERS] | base64 -w 0 | xclip -selection clipboard
+            ~ Add encoded payload and secret key (from phpinfo()) to sha1-hmac-generator.php (URL)
+        - Java -- ysoserial
+            ~ Payload should be URL encoded (whole payload) when sending through vulnerable cookie
+        - Ruby -- 
 
 
 ## White-box
@@ -39,3 +48,26 @@ Step 3: If no vulnerable gadgets found -> check Untrusted-Types plugin in Dev To
 
 
 # De-serialization
+
+
+
+# Server-Side Template Injection
+
+Step 1: Identify vulnerability
+    - Reflected input -> no XSS vuln (no output/encoded tags/error message) -> break out using templating syntax (http://vulnerable.com/?greeting=data.username}}<tag>)
+        ~ If theres no change, either wrong templating syntax is used or page isn't vulnerable
+    - Custom BurpBounty template to test for solution to mathmatical operation in response (EX: http://vulnerable.com?greeting=${7*7} -> Check response for '49')
+Step 2: Identify template engine
+    - https://portswigger.net/web-security/images/template-decision-tree.png
+Step 3: Exploit vulnerability
+
+
+# Oauth
+
+Step 1: Identify Grant Type (response_type parameter)
+    - Authorization Code -- response_type=code
+    - Implicit -- response_type=token (More common in SPAs and Desktop Apps)
+Step 2: Identify Scope (and Naming Convention for Scope)
+    - If used for Authentication, standardized OpenID Connect scopes will be used
+Step 3: Check if redirect_uri allows subdomains
+

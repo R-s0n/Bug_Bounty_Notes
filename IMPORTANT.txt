@@ -4,27 +4,9 @@
 
 Check mail for license
 
-Clean Jeep - Tuesday the 11th
-
-GO FISHING! - Thursday
-
 ************************
 * To Do - Bug Bounties *
 ************************
-
-Saturday:
-1. Build Prototype Pollution automation script - Done!
-2. Run 5 miles - Done!
-3. Set up CRON job for new script
-4. PortSwigger Labs
-
-Sunday:
-1. Pack / Load Jeep
-2. PortSwigger Labs
-3. Arm workout
-
-
-
 
 ## High-level idea for Blind XSS/HTMLi testing: 
 

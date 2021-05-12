@@ -4,11 +4,27 @@
 # Ask yourself these questions for the application
 
 1. What languages are used?
-2. How does it handle errors?
+2. What server is running the application?
+3. Is there a WAF?
+4. What additional libraries are used? Are you known exploits for these libraries?
+5. OAuth for authentication?
+6. Are there useful comments?
 
 # Ask yourself these questions for EVERY page
 
 1. What part of CRUD?
+2. What HTTP request methods can be used? (GET/POST/PUT/DELETE/etc.)
+3. What parameters can be used?
+
+# Find Chaining Bugs
+
+1. Open Redirect?
+2. Reflected user controlled data?
+    - If yes:
+        ~ HTMLi?
+        ~ XSS?
+        ~ SSTI?
+3. Error Messages?
 
 ************************
 * VULN TESTING DETAILS *
