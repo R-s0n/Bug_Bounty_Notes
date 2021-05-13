@@ -9,6 +9,7 @@
 4. What additional libraries are used? Are you known exploits for these libraries?
 5. OAuth for authentication?
 6. Are there useful comments?
+7. How is session established?
 
 # Ask yourself these questions for EVERY page
 
@@ -39,6 +40,12 @@ Prototype Pollution - Custom Script (Drifting_Embers) / Developer Tools (manual)
 RCE - Nuclei (known CVE) / Burp (manual)
 SSRF - Burp (manual)
 XSS - Custom Script (TBD) / Burp (scans/manual)
+SSTI - Custom Script (TBD) / Burp (scans)
+CSRF - Burp (manual)
+OAuth - Burp (manual)
+De-serialization - Burp (manual)
+HTTP Request Smuggling - Burp (scans)
+
 
 ************
 * TEMPLATE *

@@ -46,11 +46,6 @@ Step 2: Find vulnerable gadgets
 Step 3: If no vulnerable gadgets found -> check Untrusted-Types plugin in Dev Tools Console
 
 
-
-# De-serialization
-
-
-
 # Server-Side Template Injection
 
 Step 1: Identify vulnerability
@@ -62,12 +57,123 @@ Step 2: Identify template engine
 Step 3: Exploit vulnerability
 
 
-# Oauth
+# OAuth
 
-Step 1: Identify Grant Type (response_type parameter)
+## Steps of OAuth
+
+### Authorization Code
+
+1. Authorization Request
+    - Common parameters: redirect_uri/response_type/scope/state
+    EX: 
+        GET /authorization?client_id=12345&redirect_uri=https://client-app.com/callback&response_type=code&scope=openid%20profile&state=ae13d489bd00e3c24 HTTP/1.1
+        Host: oauth-authorization-server.com 
+2. User Consent
+3. Authorization Code Grant
+    - Common parameters: code/state
+    - Vulnerable to CSRF
+    EX:
+        GET /callback?code=a1b2c3d4e5f6g7h8&state=ae13d489bd00e3c24 HTTP/1.1
+        Host: client-app.com 
+4. Access Token Request
+    - Common parameters: client_secret/grant_type/client_id/redirect_uri/code
+    EX: 
+        POST /token HTTP/1.1
+        Host: oauth-authorization-server.com
+        …
+        client_id=12345&client_secret=SECRET&redirect_uri=https://client-app.com/callback&grant_type=authorization_code&code=a1b2c3d4e5f6g7h8 
+5. Access token grant
+    - Server responds with Bearer Token
+6. API call
+    - Contains Authorization header w/ Bearer Token
+7 Resource grant
+    - Server responds with sensitive data
+
+
+Step 1: Search traffic for known OAuth parameters
+    - client_id
+    - redirect_uri
+    - response_type
+    - state
+Step 2: Send GET request to known OAuth Service Provider endopints
+    - /.well-known/oauth-authorization-server
+    - /.well-known/openid-configuration
+Step 3: Identify Grant Type (response_type parameter)
     - Authorization Code -- response_type=code
     - Implicit -- response_type=token (More common in SPAs and Desktop Apps)
-Step 2: Identify Scope (and Naming Convention for Scope)
-    - If used for Authentication, standardized OpenID Connect scopes will be used
-Step 3: Check if redirect_uri allows subdomains
+Step 4: Identify misconfigurations that can be abused
+    - Implicit -- All data in POST request not validated when establishing session
+    - Authorization Code -- No state parameter used -> CSRF (most impact when linking accounts)
+    - Authorization Code / Implicit -- Steal code/token through redirect_uri
+        ~ There are several redirect possibilities:
+            1. Redirect to any domain
+            2. Redirect to any subdomain
+            3. Redirect to specific domains
+            4. Redirect to one domain, all paths
+            5. Redirect to one domain, specific paths
+            6. Redirect to one domain, one path
+            7. Redirect to whitelisted domains and/or paths based on Regex
+            8a. Can add parameters
+            8b. Can add specific parameters
+            8c. Cannot add parameters
+            **Note: Try using parameter pollution, SSRF/CORS defense bypass techniques, localhost.evil-server.net, etc.
+        Step 1: Send malicious url with poisoned redirect_uri parameter
+        Step 2: Read code/token in response
+        Step 3: Substitute stolen code/token when logging in
+        **Note: If redirect_uri parameter is sent with code/token, server is likely not vulnerable 
+        ~ Steal parameter data from hash fragments:
+        <script>
+            if (document.location.hash){
+                console.log("Hash identified -- redirecting...");
+                window.location = '/?'+document.location.hash.substr(1);
+            } else {
+                console.log("No hash identified in URL");
+            }
+        </script>
+    - Upgrade scope to access protected resources (depends on grant type):
+        ~ Authorization Code:
+            Step 1: Register a malicious application with the OAuth server
+            Step 2: Victim approves limited scope
+            Step 3: Malicious application sends POST request to /token with expanded scope
+            Result: If the OAuth server does not validate the scope with the original request, the access token returned will have an expanded authorization
+        ~ Implicit:
+            Step 1: Steal access token
+            Step 2: Manually send access token with expanded scope
+            Result: If the OAuth server does not validate the scope with the original request, the access token returned will have an expanded authorization
+    - Sign up with victim's email to get account takeover
 
+## OpenID Connect w/ OAuth
+
+- Uses JWT (id_token)
+- Keys can be exposed on /.well-known/jwks.json
+- Configuration can be exposed on /.well-known/openid-configuration
+- Can be combined with normal OAuth grant Types
+    EX: response_type=id_token token || response_type=id_token code
+
+Step 1: Check for dynamic registration (is some form of authentication required, like a Bearer token?)
+Step 2: Craft a malicious registration payload for SSRF
+
+
+# CSRF
+
+Step 1: Identify 3 conditions:
+    1. Relevant Action - Action in the application the attacker wishes to induce
+    2. Cookie-based Session Handling - Self explanitory (No Authorization Headers!)
+    3. No Unpredictable Request Parameters - CSRF Token / Must know current password to change
+Step 2: Build malicous page to exploits
+    - Custom:
+    <html>
+        <body>
+            <form action="https://vulnerable-website.com/email/change" method="POST">
+                <input type="hidden" name="email" value="pwned@evil-user.net" />
+            </form>
+            <script>
+                document.forms[0].submit();
+            </script>
+        </body>
+    </html> 
+    - Burp:
+        1. Select Targeted Request
+        2. Right-click -> Engagement Tools -> Generate CSRF PoC
+        3. Customize generated PoC as needed
+        4. Host in AWS

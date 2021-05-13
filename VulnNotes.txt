@@ -1,7 +1,0 @@
-# HTTP Request Smuggling
-
-- Reflected XSS -> HTTP Request Smuggling (Rewatch Defcon talk -- I forgot what this means...)
-- Check robots.txt for 404 errors (or any 404 pages) -> Perform TE.CL desync to bypass front-end
-- Try JSON post parameters as GET parameters (or just normal POST requests)
-- Look for endpoints that store request data persistently (Notes, Account Information, Emails, etc)
-- 
