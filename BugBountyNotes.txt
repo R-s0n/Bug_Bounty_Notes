@@ -14,9 +14,6 @@ To Do - Custom Scrips:
 1. Build Python script that checks searches GitHub and returns a list of searches with at least 1 result - DONE!
 
 
-
-
-
 ### Recon Methodology:
 
 1. Gather information about the target, including Acquisitions
@@ -77,7 +74,7 @@ To Do - Custom Scrips:
 	-masscan (Quick tool to identify open ports) (needs IP list!) (https://danielmiessler.com/study/masscan/)
 	-dnmasscan (Wrapper that resolves domain name and passes the IP to masscan)
 	-nmap (Deep dive on open ports discovered)
-	-Brutespray (Checks for default 
+	-Brutespray (Checks for default creds)
 
 6. Github Dorking (While subdomain automation is running)
 
@@ -102,24 +99,3 @@ To Do - Custom Scrips:
 	-EdOverflow/can-i-take-over-xyz (Database of Definitions for SDT)
 	-SubOver 
 	-nuclei
-
-
-Custom Wordlists:
-
-
-
-
-
-To Do:
-Cron Job - 6 hrs - kindling.py - Done!
-Cron Job - 24 hrs - fire_starter.py - Done!
-Cron Job - 1 wk - firewood.py - Done!
-
-
-1. Additional Ports on kindling.py (httprobe) - Done!
-2. Valuable data on Dashboard - Done!
-2. Cloud Ranges Module - Done!
-3. Custom Wordlist Module - Done!
-4. Application / Server Info Modules
-5. Fix Subdomainizer module
-

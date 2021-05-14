@@ -36,9 +36,9 @@ CLI
 
 1. Add workflow feature to nuclei wrapper
 
-Nuclei - Done (Continue To Improve)
+Nuclei
 Brutespray - Add firewood.py to cron jobs on Recon Box
-Burp Bounty - Done (Needs 
+Burp Bounty
 xsshunter
 Sn1per
 Nikto (on Target Url as part of enum automation)

