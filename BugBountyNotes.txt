@@ -38,12 +38,22 @@ To Do - Custom Scrips:
 		
 		-W/ Burp Suite Pro:
 			1. Turn off passive scanning
-			2. Set forms auto to submit (!!dangerous!!)
-			3. Set scope to advanced control and use "keyword" of target name (not a normal FQDN)
-			4. Walk/Browse main site, then spider all hosts recursively (Repeat)
-	
-		-GoSpider / hakrawler (has recursion)
-		-SubDomainizer (Also finds possible API keys using high-entrophy)
+
+
+To Do:
+Cron Job - 6 hrs - kindling.py - Done!
+Cron Job - 24 hrs - fire_starter.py - Done!
+Cron Job - 1 wk - firewood.py - Done!
+
+
+1. Additional Ports on kindling.py (httprobe) - Done!
+2. Valuable data on Dashboard - Done!
+2. Cloud Ranges Module - Done!
+3. Custom Wordlist Module - Done!
+4. Application / Server Info Modules
+5. Fix Subdomainizer module
+
+
 		
 	b. Subdomain Scraping (scrape domain information from various sources to identify URLs or domains stored in their database)
 		-Infrastructure Sources (Censys, DnsDumpster, WaybackMachine)

@@ -68,9 +68,3 @@ Attacks auto-populate based on enumeration information
 
 Cheat sheets for deployments (and Django) before I lose access to the learning platform
 
-
-***********************
-* Automation Schedule *
-***********************
-
-
