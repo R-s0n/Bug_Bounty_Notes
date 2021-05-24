@@ -6,8 +6,16 @@
 1. What stack/languages are used?
 2. What server is running the application?
 3. Is there a WAF?
-4. What additional libraries are used? Are you known exploits for these libraries?  Custom JS Llbraries?
-5. OAuth for authentication?
+4. What additional libraries are used? Are there known exploits for these libraries?  Custom JS Llbraries?
+5. Is there Authentication?
+    - Username
+    - Email
+    - OAuth
+    - OAuth w/ OpenID Connect
+    - SSO
+    - MFA
+    - Reset Password
+    - OTP
 6. What Objects are used?  
 7. How is session established?
     ~ Cookie?
@@ -23,15 +31,6 @@
     ~ Change parameters to array
         EX: http://example.com/search.php?q[]=test
 11. What common features are present?
-    ~ Authentication
-        - Username
-        - Email
-        - OAuth
-        - OAuth w/ OpenID Connect
-        - SSO
-        - MFA
-        - Reset Password
-        - OTP
     ~ Edit Profile
     ~ Email/Messaging
     ~ File Upload
