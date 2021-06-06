@@ -286,13 +286,83 @@ Step 2: Identify ways to exploit vulnerable application
 
 
 # Advanced XSS
-
 - Cheat Sheet -- https://portswigger.net/web-security/cross-site-scripting/cheat-sheet
 
-
+## Three Types
 - Reflected -- Malicious script comes from current HTTP Request
 - Stored -- Malicous script comes from the application's database
 - DOM -- Vulnerability exists in the client-side code
+
+## DOM-based XSS
+- Vulnerable pages take user-controlled data (source) and pass it to a function that supports dynamic code execution (sink)
+- Common Sources:
+    window.location (URL)
+    location.search
+    location.hash
+    document.URL
+    document.documentURI
+    document.URLUnencoded
+    document.baseURI
+    location
+    document.cookie
+    document.referrer
+    window.name
+    history.pushState
+    history.replaceState
+    localStorage
+    sessionStorage
+    IndexedDB (mozIndexedDB, webkitIndexedDB, msIndexedDB)
+    Database
+- Common Sinks:
+    document.write()
+        ~ Works with <script>
+    document.writeln()
+    document.domain
+    someDOMElement.innerHTML
+        ~ Works with <img> or <iframe>
+    someDOMElement.outerHTML
+    someDOMElement.insertAdjacentHTML
+    someDOMElement.onevent
+    add()
+    after()
+    append()
+    animate()
+    attr()
+        ~ Works with HTML tags that can use the href attribute
+        ~ Example: Set return URL to javascript:alert('XSS')
+    insertAfter()
+    insertBefore()
+    before()
+    html()
+    prepend()
+    replaceAll()
+    replaceWith()
+    wrap()
+    wrapInner()
+    wrapAll()
+    has()
+    constructor()
+    init()
+    index()
+    jQuery.parseHTML()
+    $.parseHTML()
+- Testing for Sinks:
+    ~ HTML Sinks -- Easy
+        1. Send MD5 sum through the source
+        2. Search HTML in Dev Tools for MD5 sum (Ctrl + F)
+        3. Refine payload to deliver attack
+    ~ JavaScript Execution Sinks -- Hard
+        1. Search JavaScript code for any sources being referenced (Ctrl + Shift + F)
+        2. Add breakpoints and manually follow how the source's value is being used
+        3. If source's value is assigned to a variable, search for how that variable is used
+        4. If that variable is passed to a sink, hover over the variable to show it's value before it's passed to the sink
+        5. Refine payload to deliver attack
+- Angular
+    ~ Look for the "ng-app" attribute
+    ~ All JavaScript enclosed in the HTML tags labelled ng-app will be run automatically by Angular
+    Payload: {{$on.constructor('alert(1)')()}}
+- When JavaScript eval() method evaluates a JSON object
+    Payload: \"-alert(1)}//
 
 ## Contexts
 - Between HTML tags
