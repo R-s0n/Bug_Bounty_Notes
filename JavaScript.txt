@@ -1,0 +1,92 @@
+# JavaScript Excapes
+
+Notes from __JavaScript For Hackers__ by **Gareth Heyes**
+
+https://www.amazon.com/JavaScript-hackers-Learn-think-hacker-ebook/dp/B0BQSRJ71H
+
+## Hexadecimal -- '\x72\x73\x30\x6E' = rs0n
+
+Can only be used as Strings
+
+'\x61' = a
+"\x61" = a
+`\x61` = a
+
+Can NOT be used as Identifiers
+
+function a(){console.log("rs0n")}
+\x61() = rs0n
+
+## Unicode -- '\u0072\u0073\u0030\u006E' = rs0n
+
+Can be used as BOTH Strings and Identifiers
+
+'\u0061' = a
+"\u0061" = a
+`\u0061` = a
+
+function a(){console.log("rs0n")}
+\u0061() = rs0n
+
+Two types of Unicode Escapes:
+1. \u
+    - Must have 4 digits
+    - \u61 = FAIL
+2. \u{}
+    - Can have any number of digits
+    - eval("\u{61}" == "a" && "\u{0000000000000061}" == "a" && "\u{0061}" == "a") = True
+
+## Octal -- '\162\163\060\156' = rs0n
+
+Can only be used as Strings
+
+## Exploiting Eval
+
+Eval allows you to break the rules above
+
+Examples:
+
+- Store a variable with Hex -- eval('\x62 = "rs0n"')
+    1. \x62 -> b
+    2.  eval('b = "rs0n"') === var b = "rs0n"
+- Double Unicode Escape -- eval('\\u0062 = "rs0n"')
+    1. Escape the Backslash: \\u0062 -> \u0062
+    2. eval('\\u0062 = "rs0n"') === var b = "rs0n"
+- Embed Escapes in Escapes
+    - eval('\\u\x30062 = "rs0n"')
+        - Hex Escape the first 0 in the Unicode Escape
+        - \x30 -> 0
+    - eval('\\u\x300\662 = "rs0n"')
+        - Hex and Octal Escape Unicode Escape Digits
+        - \x30 -> 0 && \66 -> 6
+
+# Strings
+
+Three Forms of Strings:
+
+1. Single Quotes - 'rs0n'
+2. Double Quotes - "rs0n"
+3. Template Strings - `rs0n`
+
+Single Character Escape Sequences:
+
+'\b' = Backspace
+'\f' = Form Feeed
+'\n' = New Line
+'\r' = Carriage Return
+'\t' = Tab
+'\v' = Vertical Tab
+'\0' = Null
+'\'' = Single Quote
+'\"' = Double Quote
+'\\" = Backslash
+
+Any other character can be Escaped with no effect
+
+"\R\S\O\N" = RS0N
+
+The Backslash lets you carry the String to the next line
+
+"If you want to live a happy life \
+tie it to a goal\
+not to people or things."
