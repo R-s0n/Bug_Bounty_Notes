@@ -2,7 +2,7 @@
 
 SSRF - Force a vulnerable machine to make an HTTP request the owner did not intend
 
-WHY are you executing the attack?
+- WHY are you executing the attack?
     - Forge HTTP requests to internal services or resources to extract sensitive information.
     - Exploit SSRF to scan and enumerate the internal network or discover hidden services.
     - Manipulate SSRF to bypass security controls and access restricted data or functionality.
@@ -11,23 +11,23 @@ WHY are you executing the attack?
     - Redirect requests to external resources to abuse application functionality or cause disruption.
     - Make malicious HTTP Requests on behalf of the organization to damage their reputation and ultimately lead to financial loss.
 
-WHO is the victim?
+- WHO is the victim?
     - The organization hosting the infrastructure
 
-What Technology are you exploiting??
+- What Technology are you exploiting??
     - Server-Side Code in Application (axios, HttpURLConnection, HttpClient, cURL, etc.)
     - Command Injection on Server (curl, wget, etc.)
     - CVE in infrastructure
     - Misconfigured cloud service
 
-WHEN will you execute the attack?
+- WHEN will you execute the attack?
     - If Targeted: When the target service is up
     - If Enumerating: Enum will be noisy, best to run the attack at night?  Or better during the day with more noise?
 
-WHERE can I execute the attack?
+- WHERE can I execute the attack?
     - Anywhere w/ Internet Connection
 
-HOW will you deliver the payload?
+- HOW will you deliver the payload?
     - HTTP Request
     - User-controlled input (param, header, cookie, anything)
 
