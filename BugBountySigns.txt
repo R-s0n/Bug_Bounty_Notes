@@ -4,80 +4,162 @@
 # Ask yourself these questions for the application
 
 1. What stack/languages are used?
+    - PHP
 2. What server is running the application?
+    - GCP
 3. Is there a WAF?
 4. What additional libraries are used? Are there known exploits for these libraries?  Custom JS Llbraries?
-5. Is there Authentication?
-    - Username
-    - Email
-    - OAuth
-    - OAuth w/ OpenID Connect
-    - SSO
-    - MFA
-    - Reset Password
+    - Alpine.js 3.10.3
+5. Is there Authentication? - Yes, OAuth through Google/Facebook
+    - Username - NA
+    - Email - NA
+    - OAuth - Yes
+    - OAuth w/ OpenID Connect - Maybe
+    - SSO - Yes
+    - MFA - No
+    - Reset Password - No
     - OTP
-6. What Objects are used?  
+6. What Objects are used?
+    - User
+        - Gmail Username
+        - Handle
+    - Definition
+        - Word -- String
+        - WordDefinition -- String
+        - Examples -- [String]
+        - Author - Foreign Key (maybe, assuming this is relational)
+        - Likes - Int
+        - Dislikes - Int
+        - Flag -- Boolean
+        - CreatedAt Date
+        - UpdatedAt Date
+    - Subscription
+        - Email
 7. How is session established?
     ~ Cookie?
+        - _urbandictionary_session3
+        - Data stored in Cookie
+            - Base64
+            - --MD5
+        - No Secure Flag
     ~ Bearer Token?
     ~ JWT?
     ~ Is it serialized? (Java, PHP, .NET, Python)
 8. Are there useful comments?
+_|_  _  _    _|. __|_. _  _  _  _
+    |_|| |_)(_|| |  (_||(_ | |(_)| |(_||\/
+                                        /
+
+    Need help? http://help.urbandictionary.com/
+
+<![CDATA[
+
+<![CDATA[
+
+<![CDATA[
+
+<![CDATA[
+
+OneTrust Cookies Consent Notice start
+
+OneTrust Cookies Consent Notice end
+
+git:
+
 9. How does it handle special characters?
+    - PHP
+    - Breaks often
 10. Can you trigger any error messages?
     ~ Send malicious characters to every parameter
         - Emojis
+            - The app seems to handle emojis and special characters well
         - List of naughty strings (SecLists)
+            - % seems to cause the app to break (POST https://my.urbandictionary.com/handle.save.php - commit=Save)
     ~ Change parameters to array
         EX: http://example.com/search.php?q[]=test
+        - This is actually part of some requests by design
+            utf8=%E2%9C%93&authenticity_token=FrbdigoDGo3%2FXz5gGNjJEm0l6UjhL8vTwMYpR5l3gQIHNZhoCNiws1Fvj2pJh8DZFhKPf5VSR%2FtBbzyjFxFTKg%3D%3D&user%5Bhandle%5D=rs0n&commit=rs0n
+        - CSRF Token feature breaks when converted to an array
+        - Doesn't like json data
 11. What common features are present?
     ~ Edit Profile
+        - Change handle
     ~ Email/Messaging
+        - None
     ~ File Upload
+        - None
     ~ Shopping/Checkout
-    ~ Webhook
+        - None
+    ~ Websocket
+        - None
     ~ Flight/Hotel Booking
+        - None
     ~ Banking
+        - None
 12. How is a user identified?
+    - Through the cookie
+        _urbandictionary_session3=V28weWRuNm9KV1E0R1RnRElEblFVeDJkTEhlVS9ldmliZ04xOU9pU2Z5c3ByVU9JelZlWG1tdE8vZVFqS0ZOcjBQbXY0NGJjMmIzVlhDc1ZGWE5wVmFDUGhWa0ttdytUT3RMdFJWamhSYUNBRFB4YUt0cTc5NU9vT2xacGJOUWhBZFByKy9QbXRUR1lGUjJHZHlqY0hLZTJHOVdBVW96QlJqajFMbXpUY3V3djJKSnpqNmpwM3E4QTd3ZTJLZXFFd3dKeFJmSmhIbUNDVUJRTFZITW9SWHlkSThkVm0ydmN2UUlqNUp0UUtDRForOTdXWTQ0RXUwR0dBVDRBTWxHbWcxcklycmFXWWJhd2tDbUZ1SmhvUFc4a0RscmNENVl1dnBYc1I4T3Z2aHFzWmZ4Qk9VWFdKbFhOeDZSelV5cWFSRXp6NmpIYnVIL21EU1FRdi9GQjYxMkZBZnJVTUlQc0ZsZGlGWFpLWW9zPS0tSEY0U3VSekhpeUkvdTkxNDlXQTM2Zz09--67db87ef5a7506f057bb732c1bdf12f1a3b05df6
 13. Are there multiple user roles?
+    - User 
+    - Admin - Reviews Definitions
 14. Is there an API?
+    - api.urbandictionary.com
 15. Is there an Content Management System?
+    - No
 16. Is there a Content Security Policy?
+    - No****
 17. Is CORS implemented?
+    - Yes, on API, some allow creds
 18. Is Captcha used?
+    - No
 19. Are WebSockets used?
+    - No
 20. Is the source code publicly available?
+    - https://github.com/urbandictionary (some but not all)
 
 
 # Ask yourself these questions about the server hosting the application
 1. What ports are open?
 2. What services are running on those ports?
 3. Is it hosted in the cloud?
+    - Yes, GCP
     - Check org's ASN #'s
     - Check IP against known AWS/Azure IP ranges
 4. Is it hosting multiple apps using VHosting?
+    - Main Server - No
+    - API Server - Yes
 5. What is the OS?
 6. Can you get the kernel version?
 
 # Ask yourself these questions for EVERY page
 
+- The application looks like it is allow-listing HTTP verbs, not denying them
+- Framework?
+
 1. What part of CRUD?
 2. What HTTP request methods can be used? (GET/POST/PUT/DELETE/etc.)
 3. What parameters can be used?
 
+- GET https://my.urbandictionary.com/add.php?word=rs0n
+    - 
+
 # Find Chaining Bugs
 
 1. Open Redirect?
+    - https://my.urbandictionary.com/
+        - Changing the host header to www.urbandictionary.com may be vulnerable to open redirect
     - If yes:
         ~ Can you redirect to different paths?
         ~ Can you redirect to different subdomains?
         ~ Can you redirect to different domains?
 2. Reflected user controlled data?
+    - https://my.urbandictionary.com/add.php?word=rs0n
     - If yes:
         ~ HTMLi?
         ~ XSS?
         ~ SSTI?
 3. CSRF?
+    - CSRF Tokens do not appear to be invalidated when sent or when the user logs out
     If yes:
         ~ What can we do with this endpoint?
         ~ Is this endpoint an open redirect?
